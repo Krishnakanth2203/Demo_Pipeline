@@ -21,6 +21,7 @@ jobs:
       - name: Extract Version from pom.xml
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "THE EXTRACTED VERSION IS: $VERSION"
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Log in to Docker Hub
