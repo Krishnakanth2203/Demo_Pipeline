@@ -26,6 +26,16 @@ jobs:
           echo "The commit count is: $COMMIT_COUNT"
           echo "APP_VERSION=1.$COMMIT_COUNT" >> $GITHUB_ENV
 
+      - name: Create and Push Git Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          TAG="v1.${{ github.run_number }}"
+
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
