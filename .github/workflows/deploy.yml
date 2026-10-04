@@ -3,6 +3,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-24.04
@@ -28,10 +32,12 @@ jobs:
 
       - name: Create and Push Git Tag
         run: |
-          git config user.name "krishnakanth2203"
-          git config user.email "krishnakanthelumalai@gmail.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          TAG="v1.${{ github.run_number }}"
+          TAG="v${APP_VERSION}"
+
+          echo "Creating Git tag: $TAG"
 
           git tag -a "$TAG" -m "Release $TAG"
           git push origin "$TAG"
